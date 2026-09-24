@@ -1,6 +1,8 @@
 <title>Extreme Dashboard</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ag-grid-community@31/styles/ag-grid.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ag-grid-community@31/styles/ag-theme-alpine.css">
 <style>
 :root {
   --primary: #1e3a8a;
@@ -347,6 +349,14 @@ footer {
   .header-right { flex-direction: column; width: 100%; }
   .grid { grid-template-columns: 1fr; }
 }
+
+.ag-theme-alpine {
+  --ag-foreground-color: var(--text);
+  --ag-background-color: var(--gray-50);
+  --ag-border-color: var(--border);
+  --ag-header-background-color: var(--gray-100);
+  --ag-row-hover-color: var(--gray-100);
+}
 </style>
 
 <header>
@@ -430,25 +440,9 @@ footer {
   <div class="row full-width">
     <div class="card">
       <div class="card-header">
-        <h3 class="card-title">Traffic by Region (Last 24h)</h3>
+        <h3 class="card-title">Extreme Networks Access Points</h3>
       </div>
-      <div class="chart-container">
-        <div class="chart-bar" style="height: 65%;">
-          <span class="chart-label">North America</span>
-        </div>
-        <div class="chart-bar" style="height: 48%;">
-          <span class="chart-label">Europe</span>
-        </div>
-        <div class="chart-bar" style="height: 72%;">
-          <span class="chart-label">APAC</span>
-        </div>
-        <div class="chart-bar" style="height: 55%;">
-          <span class="chart-label">LATAM</span>
-        </div>
-        <div class="chart-bar" style="height: 38%;">
-          <span class="chart-label">EMEA</span>
-        </div>
-      </div>
+      <div id="apGrid" class="ag-theme-alpine" style="height: 400px; width: 100%; margin-top: 16px;"></div>
     </div>
   </div>
 
@@ -513,12 +507,39 @@ footer {
 
 <footer>
   <p>Extreme Dashboard • Last updated: <span id="time"></span></p>
-  <script>
-    function updateTime() {
-      const now = new Date();
-      document.getElementById('time').textContent = now.toLocaleTimeString();
-    }
-    updateTime();
-    setInterval(updateTime, 1000);
-  </script>
 </footer>
+
+<script src="https://cdn.jsdelivr.net/npm/ag-grid-community@31/dist/ag-grid-community.min.js"></script>
+<script>
+  function updateTime() {
+    const now = new Date();
+    document.getElementById('time').textContent = now.toLocaleTimeString();
+  }
+  updateTime();
+  setInterval(updateTime, 1000);
+
+  const columnDefs = [
+    { field: 'model', headerName: 'Model', flex: 1, sort: 'asc' },
+    { field: 'standard', headerName: 'Standard', flex: 0.8 },
+    { field: 'frequencyBands', headerName: 'Frequency Bands', flex: 1 },
+    { field: 'maxTxPower', headerName: 'Max TX Power', flex: 0.9 },
+    { field: 'mimoStreams', headerName: 'MIMO Configuration', flex: 1 },
+  ];
+
+  const rowData = [
+    { model: 'AP5010', standard: '802.11ax (WiFi 6E)', frequencyBands: '2.4GHz, 5GHz, 6GHz', maxTxPower: 'Country-dependent', mimoStreams: '4x4:4 (tri-radio)' },
+    { model: 'AP4020', standard: '802.11be (WiFi 7)', frequencyBands: '2.4GHz, 5GHz, 6GHz', maxTxPower: 'Country-dependent', mimoStreams: '2x2:2 (tri-radio)' },
+    { model: 'AP4000', standard: '802.11ax (WiFi 6E)', frequencyBands: '2.4GHz, 5GHz, 6GHz', maxTxPower: 'Country-dependent', mimoStreams: '2x2:2 (tri-radio)' },
+    { model: 'AP3000', standard: '802.11ax (WiFi 6E)', frequencyBands: '2.4GHz, 5GHz, 6GHz', maxTxPower: 'Country-dependent', mimoStreams: '2x2:2 (dual-radio)' },
+    { model: 'AP4060 (Outdoor)', standard: '802.11be (WiFi 7)', frequencyBands: '2.4GHz, 5GHz, 6GHz', maxTxPower: 'Country-dependent', mimoStreams: '2x2:2 (tri-radio)' },
+    { model: 'AP460C (Outdoor)', standard: '802.11ax (WiFi 6E)', frequencyBands: '2.4GHz, 5GHz', maxTxPower: 'Country-dependent', mimoStreams: '2x2:2' },
+  ];
+
+  agGrid.createGrid(document.getElementById('apGrid'), {
+    columnDefs,
+    rowData,
+    defaultColDef: { sortable: true, filter: true, resizable: true },
+    pagination: true,
+    paginationPageSize: 10,
+  });
+</script>
