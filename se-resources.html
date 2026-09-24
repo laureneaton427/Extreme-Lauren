@@ -1,0 +1,420 @@
+<title>SE Resources</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ag-grid-community@31/styles/ag-grid.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ag-grid-community@31/styles/ag-theme-alpine.css">
+<style>
+:root {
+  --primary: #1e3a8a;
+  --primary-light: #3b82f6;
+  --accent: #f59e0b;
+  --accent-light: #fbbf24;
+  --success: #10b981;
+  --warning: #f97316;
+  --danger: #ef4444;
+  --gray-50: #f9fafb;
+  --gray-100: #f3f4f6;
+  --gray-200: #e5e7eb;
+  --gray-300: #d1d5db;
+  --gray-400: #9ca3af;
+  --gray-500: #6b7280;
+  --gray-600: #4b5563;
+  --gray-700: #374151;
+  --gray-800: #1f2937;
+  --gray-900: #111827;
+  --bg: #ffffff;
+  --text: #1f2937;
+  --text-secondary: #6b7280;
+  --border: #e5e7eb;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --primary: #3b82f6;
+    --primary-light: #60a5fa;
+    --accent: #f59e0b;
+    --accent-light: #fbbf24;
+    --success: #10b981;
+    --warning: #f97316;
+    --danger: #ef4444;
+    --gray-50: #0f172a;
+    --gray-100: #1e293b;
+    --gray-200: #334155;
+    --gray-300: #475569;
+    --gray-400: #64748b;
+    --gray-500: #94a3b8;
+    --gray-600: #cbd5e1;
+    --gray-700: #e2e8f0;
+    --gray-800: #f1f5f9;
+    --gray-900: #f8fafc;
+    --bg: #0f172a;
+    --text: #f1f5f9;
+    --text-secondary: #94a3b8;
+    --border: #334155;
+  }
+}
+
+:root[data-theme="dark"] {
+  --primary: #3b82f6;
+  --primary-light: #60a5fa;
+  --accent: #f59e0b;
+  --accent-light: #fbbf24;
+  --success: #10b981;
+  --warning: #f97316;
+  --danger: #ef4444;
+  --gray-50: #0f172a;
+  --gray-100: #1e293b;
+  --gray-200: #334155;
+  --gray-300: #475569;
+  --gray-400: #64748b;
+  --gray-500: #94a3b8;
+  --gray-600: #cbd5e1;
+  --gray-700: #e2e8f0;
+  --gray-800: #f1f5f9;
+  --gray-900: #f8fafc;
+  --bg: #0f172a;
+  --text: #f1f5f9;
+  --text-secondary: #94a3b8;
+  --border: #334155;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body {
+  margin: 0;
+  padding: 0;
+  font: 14px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.5;
+  display: flex;
+}
+
+.sidebar {
+  width: 200px;
+  background: var(--gray-100);
+  border-right: 1px solid var(--border);
+  padding: 20px 0;
+  flex-shrink: 0;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+}
+
+.sidebar-content {
+  padding: 0 16px;
+}
+
+.sidebar-title {
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--text-secondary);
+  margin: 0 0 12px 0;
+  padding: 0;
+}
+
+.sidebar-link {
+  display: block;
+  padding: 10px 12px;
+  margin: 8px 0;
+  border-radius: 6px;
+  text-decoration: none;
+  color: var(--text);
+  background: transparent;
+  border: 1px solid transparent;
+  transition: all 0.2s;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.sidebar-link:hover {
+  background: var(--primary);
+  color: white;
+  border-color: var(--primary);
+}
+
+.sidebar-link.active {
+  background: var(--primary);
+  color: white;
+  border-color: var(--primary);
+}
+
+.main-content {
+  flex: 1;
+  padding: 0 16px;
+  overflow-y: auto;
+}
+
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 0;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 30px;
+  position: sticky;
+  top: 0;
+  background: var(--bg);
+  z-index: 10;
+}
+
+h1 {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--primary);
+}
+
+.container {
+  display: grid;
+  gap: 20px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.card {
+  background: var(--gray-50);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 12px;
+}
+
+.card-title {
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+.resource-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.resource-item {
+  padding: 12px;
+  margin: 8px 0;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.resource-name {
+  font-weight: 500;
+  color: var(--text);
+}
+
+.resource-link {
+  color: var(--primary-light);
+  text-decoration: none;
+  font-size: 12px;
+  padding: 6px 12px;
+  background: var(--primary);
+  color: white;
+  border-radius: 4px;
+  transition: all 0.2s;
+}
+
+.resource-link:hover {
+  background: var(--primary-light);
+  text-decoration: none;
+}
+
+.alert {
+  padding: 12px 16px;
+  border-radius: 6px;
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  margin-bottom: 16px;
+}
+
+.alert-info {
+  background: rgba(59, 130, 246, 0.1);
+  border: 1px solid rgba(59, 130, 246, 0.3);
+  color: var(--primary-light);
+}
+
+.alert-icon {
+  font-size: 16px;
+  flex-shrink: 0;
+}
+
+footer {
+  text-align: center;
+  padding: 30px 0 20px;
+  margin-top: 40px;
+  border-top: 1px solid var(--border);
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+@media (max-width: 768px) {
+  body { flex-direction: column; }
+  .sidebar { width: 100%; height: auto; position: static; }
+  h1 { font-size: 20px; }
+}
+
+.ag-theme-alpine {
+  --ag-foreground-color: var(--text);
+  --ag-background-color: var(--gray-50);
+  --ag-border-color: var(--border);
+  --ag-header-background-color: var(--gray-100);
+  --ag-row-hover-color: var(--gray-100);
+}
+</style>
+
+<div class="sidebar">
+  <div class="sidebar-content">
+    <h3 class="sidebar-title">Navigation</h3>
+    <a href="index.html" class="sidebar-link">Dashboard</a>
+    <a href="se-resources.html" class="sidebar-link active">SE Resources</a>
+  </div>
+</div>
+
+<div class="main-content">
+  <header>
+    <h1>SE Resources</h1>
+  </header>
+
+  <div class="container">
+    <div class="alert alert-info">
+      <div class="alert-icon">📚</div>
+      <div>
+        <strong>Sales Engineer Resources</strong> — Essential documentation, tools, and references for Extreme Networks solutions
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <h3 class="card-title">Documentation & Guides</h3>
+      </div>
+      <ul class="resource-list">
+        <li class="resource-item">
+          <span class="resource-name">Access Point Configuration Guide</span>
+          <a href="#" class="resource-link">View</a>
+        </li>
+        <li class="resource-item">
+          <span class="resource-name">Network Design Best Practices</span>
+          <a href="#" class="resource-link">View</a>
+        </li>
+        <li class="resource-item">
+          <span class="resource-name">Security Implementation Guide</span>
+          <a href="#" class="resource-link">View</a>
+        </li>
+        <li class="resource-item">
+          <span class="resource-name">Troubleshooting & Support</span>
+          <a href="#" class="resource-link">View</a>
+        </li>
+        <li class="resource-item">
+          <span class="resource-name">API Documentation</span>
+          <a href="#" class="resource-link">View</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <h3 class="card-title">Product Datasheets</h3>
+      </div>
+      <ul class="resource-list">
+        <li class="resource-item">
+          <span class="resource-name">AP5010 Datasheet (WiFi 6E)</span>
+          <a href="#" class="resource-link">Download</a>
+        </li>
+        <li class="resource-item">
+          <span class="resource-name">AP4020 Datasheet (WiFi 7)</span>
+          <a href="#" class="resource-link">Download</a>
+        </li>
+        <li class="resource-item">
+          <span class="resource-name">AP4000 Datasheet (WiFi 6E)</span>
+          <a href="#" class="resource-link">Download</a>
+        </li>
+        <li class="resource-item">
+          <span class="resource-name">Wireless Portfolio Overview</span>
+          <a href="#" class="resource-link">Download</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <h3 class="card-title">Training & Certification</h3>
+      </div>
+      <ul class="resource-list">
+        <li class="resource-item">
+          <span class="resource-name">Extreme Networks Certified Associate (ENCA)</span>
+          <a href="#" class="resource-link">Learn More</a>
+        </li>
+        <li class="resource-item">
+          <span class="resource-name">Sales Engineer Training Program</span>
+          <a href="#" class="resource-link">Enroll</a>
+        </li>
+        <li class="resource-item">
+          <span class="resource-name">Product Demo Videos</span>
+          <a href="#" class="resource-link">Watch</a>
+        </li>
+        <li class="resource-item">
+          <span class="resource-name">Case Studies & Success Stories</span>
+          <a href="#" class="resource-link">Browse</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <h3 class="card-title">Support & Tools</h3>
+      </div>
+      <ul class="resource-list">
+        <li class="resource-item">
+          <span class="resource-name">Technical Support Portal</span>
+          <a href="#" class="resource-link">Access</a>
+        </li>
+        <li class="resource-item">
+          <span class="resource-name">Configuration Calculator</span>
+          <a href="#" class="resource-link">Use Tool</a>
+        </li>
+        <li class="resource-item">
+          <span class="resource-name">ROI Calculator</span>
+          <a href="#" class="resource-link">Calculate</a>
+        </li>
+        <li class="resource-item">
+          <span class="resource-name">Community Forum</span>
+          <a href="#" class="resource-link">Join</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <footer>
+    <p>Extreme Networks SE Resources • Last updated: <span id="time"></span></p>
+  </footer>
+</div>
+
+<script>
+  function updateTime() {
+    const now = new Date();
+    document.getElementById('time').textContent = now.toLocaleTimeString();
+  }
+  updateTime();
+  setInterval(updateTime, 1000);
+</script>
